@@ -1,0 +1,44 @@
+npm init -y
+
+MODULOS
+
+express // @types/express
+morgan // @types/morgan
+mysql2 // @types/mysql2
+nodemon
+ts-node
+typescript
+npm i prisma -D
+npm install resourceful-router ???
+
+CONFIGURACIOBN DE PRISMA
+
+para inicializar la configuracion de prisma:
+npx prisma init
+o tambien: 
+npx prisma init --datasource-provider mysql para configurar mysql
+
+CONFIGURACION DE LOS COMANDOS DE npm
+ "build": "tsc"
+ "dev": "nodemon src/index.ts --exec ts-node",
+
+MODELOS
+datamodel en la documentacion tiene mas informacion a cerca de los modelos
+estos son un ejemplo sencillo:
+    model User {
+    id Int @id @default(autoincrement())
+    name String
+    password String
+    active Boolean @default(true)
+    task Task[]
+    }
+
+    model Task {
+    id Int @id @default(autoincrement())
+    description String
+    createdAt DateTime @default(now())
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    }
+
+despues hay que ejecutar npx prisma migrate dev
