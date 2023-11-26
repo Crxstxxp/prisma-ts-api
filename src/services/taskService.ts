@@ -13,13 +13,7 @@ export class TaskService {
 
   async getTasks(user: any): Promise<any> {
     try {
-      const User = user.id
-        ? await prisma.user.findUnique({
-            where: {
-              id: user.id,
-            },
-          })
-        : user;
+      const User = await this.recoverUser(user);
 
       if (User.type == UserRepository.ADMIN) {
         return this.getAllTasks();
@@ -58,13 +52,7 @@ export class TaskService {
   }
 
   async createTask(user: any, taskData: any): Promise<any> {
-    const User = user.id
-      ? await prisma.user.findUnique({
-          where: {
-            id: user.id,
-          },
-        })
-      : user;
+    const User = await this.recoverUser(user);
 
     if (User.type == UserRepository.ADMIN) {
       throw new Error(
@@ -76,5 +64,15 @@ export class TaskService {
       ...taskData,
       userId: User.id,
     });
+  }
+
+  async recoverUser(user: any): Promise<any> {
+    return user.id
+      ? await prisma.user.findUnique({
+          where: {
+            id: user.id,
+          },
+        })
+      : user;
   }
 }

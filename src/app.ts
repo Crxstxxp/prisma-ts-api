@@ -11,12 +11,7 @@ export class App {
     this.app = express();
     this.settings();
     this.middlewares();
-    this.routes()
-
-    //este es un comentario en la rama working
-
-
-    //este es otro comentario en la rama working
+    this.routes();
   }
 
   settings() {
